@@ -13,6 +13,7 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.example.catchat.R
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,12 +27,12 @@ class MainActivity : AppCompatActivity() {
         as NavHostFragment
         val navController = navHostFragment.navController
 
-        // now build a configuration that links the toolbar to the navigation graph
-        val builder = AppBarConfiguration.Builder(navController.graph) //builder pattern
-        val appBarConfiguration = builder.build()
-
-        // apply configuration to the toolbar
+        // to get an up button and other navigation components in the toolbar
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
         toolbar.setupWithNavController(navController,appBarConfiguration)
+
+        val bottomAppBar = findViewById<BottomNavigationView>(R.id.bottom_bar_nav)
+        bottomAppBar.setupWithNavController(navController)
     }
 
     /* when the activity is ready to add items to toolbar this method is called
