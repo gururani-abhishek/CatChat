@@ -5,15 +5,18 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.example.catchat.R
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,12 +30,21 @@ class MainActivity : AppCompatActivity() {
         as NavHostFragment
         val navController = navHostFragment.navController
 
-        // to get an up button and other navigation components in the toolbar
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        toolbar.setupWithNavController(navController,appBarConfiguration)
+        // get an instance of AppBarConfiguration.Builder() class
+        val builder = AppBarConfiguration.Builder(navController.graph)
+
+        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
+        builder.setOpenableLayout(drawerLayout)
+
+        val appBarConfiguration = builder.build()
+        toolbar.setupWithNavController(navController, appBarConfiguration)
 
         val bottomAppBar = findViewById<BottomNavigationView>(R.id.bottom_bar_nav)
         bottomAppBar.setupWithNavController(navController)
+
+        val navViewDrawer = findViewById<NavigationView>(R.id.nav_view_drawer)
+        navViewDrawer.setupWithNavController(navController)
+
     }
 
     /* when the activity is ready to add items to toolbar this method is called
